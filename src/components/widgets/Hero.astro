@@ -22,6 +22,7 @@ const {
   actions = await Astro.slots.render('actions'),
   image = await Astro.slots.render('image'),
 } = Astro.props;
+console.log(Astro.props.actions);
 ---
 
 <section class="relative md:-mt-[76px] not-prose" {...id ? { id } : {}}>

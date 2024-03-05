@@ -1,4 +1,5 @@
 import slugify from 'limax';
+import { log } from 'node_modules/astro/dist/core/logger/core';
 
 import { SITE, APP_BLOG } from '~/utils/config';
 
@@ -60,6 +61,7 @@ export const getPermalink = (slug = '', type = 'page'): string => {
       permalink = createPath(slug);
       break;
   }
+  
 
   return definitivePermalink(permalink);
 };

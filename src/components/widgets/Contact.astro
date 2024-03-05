@@ -19,6 +19,7 @@ const {
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props as Contact;
+console.log('astrocontacty', Astro.props as Contact);
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
