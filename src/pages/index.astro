@@ -11,6 +11,7 @@ import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import FeedbackForm from '~/components/FeedbackForm';
 
 const metadata = {
   title: '',
@@ -235,4 +236,6 @@ const metadata = {
       alt: 'Steps image',
     }}
   />
+
+  <FeedbackForm client:load />
 </Layout>
