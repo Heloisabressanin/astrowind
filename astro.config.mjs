@@ -26,10 +26,7 @@ export default defineConfig({
   site: SITE.site,
   base: SITE.base,
   trailingSlash: SITE.trailingSlash ? 'always' : 'never',
-  output: 'server',
-  adapter: vercel({
-    edgeMiddleware: true,
-  }),
+  output: 'static',
 
   integrations: [
     [react()],
