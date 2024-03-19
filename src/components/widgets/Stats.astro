@@ -23,14 +23,18 @@ const {
     {
       stats &&
         stats.map(({ amount, title, icon }) => (
-        <div class="p-4 md:w-1/4 sm:w-1/2 w-full min-w-[220px] text-center md:border-r md:last:border-none dark:md:border-slate-500">
+          <div class="p-4 md:w-1/4 sm:w-1/2 w-full min-w-[220px] text-center md:border-r md:last:border-none dark:md:border-slate-500 ">
             {icon && (
               <div class="flex items-center justify-center mx-auto mb-4 text-primary">
                 <Icon name={icon} class="w-10 h-10" />
               </div>
             )}
             {amount && (
-              <div class="font-heading text-primary text-[2.6rem] font-bold dark:text-white lg:text-5xl xl:text-6xl">
+              <div
+                class="font-heading text-primary text-[2.6rem] font-bold dark:text-white lg:text-5xl xl:text-6xl stat-grow"
+                data-initial-value="0"
+                data-final-value={amount}
+              >
                 {amount}
               </div>
             )}
@@ -44,3 +48,45 @@ const {
     }
   </div>
 </WidgetWrapper>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const countingElements = document.querySelectorAll('.stat-grow');
+
+    const options = {
+      root: null, 
+      rootMargin: '0px', 
+      threshold: 0.3, 
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const element = entry.target;
+          const countTo = parseInt(element.getAttribute('data-final-value'));
+          const duration = 1600; 
+          const increment = Math.ceil(countTo / (duration / 100));
+
+          let currentCount = 0;
+
+          const updateCount = () => {
+            currentCount += increment;
+            if (currentCount < countTo) {
+              element.textContent = currentCount;
+              setTimeout(updateCount, 100); 
+            } else {
+              element.textContent = countTo; 
+            }
+          };
+
+          setTimeout(updateCount, 0); 
+          observer.unobserve(element);
+        }
+      });
+    }, options);
+
+    countingElements.forEach((element) => {
+      observer.observe(element);
+    });
+  });
+</script>

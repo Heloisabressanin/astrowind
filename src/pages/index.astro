@@ -1,17 +1,10 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-
 import Hero from '~/components/widgets/Hero.astro';
-import Note from '~/components/widgets/Note.astro';
 import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
 import Steps from '~/components/widgets/Steps.astro';
 import Content from '~/components/widgets/Content.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
-import FAQs from '~/components/widgets/FAQs.astro';
 import Stats from '~/components/widgets/Stats.astro';
-import CallToAction from '~/components/widgets/CallToAction.astro';
-import FeedbackForm from '~/components/FeedbackForm';
 
 const metadata = {
   title: '',
@@ -23,22 +16,13 @@ const metadata = {
   <!-- Hero Widget ******************* -->
 
   <Hero
-    actions={[
-      // {
-      //   variant: 'primary',
-      //   text: 'Get template',
-      //   href: 'https://github.com/onwidget/astrowind',
-      //   target: '_blank',
-      //   icon: 'tabler:download',
-      // },
-      { text: 'Savoir plus', href: '#features' },
-    ]}
+    actions={[{ text: 'Savoir plus', href: '#features' }]}
     image={{ src: '~/assets/images/hero.png', alt: 'Image' }}
   >
     <Fragment slot="title">
       Bienvenue chez
-      <span class="text-accent dark:text-white highlight">GILACCESS</span>, où l'avenir est automatisé et les
-      possibilités sont illimitées.
+      <span class="text-accent highlight">GILACCESS</span>, où l'avenir est automatisé et les possibilités sont
+      illimitées.
     </Fragment>
 
     <Fragment slot="subtitle">
@@ -49,21 +33,14 @@ const metadata = {
     </Fragment>
   </Hero>
 
-  <!-- Note Widget ******************* -->
-
-  <Note />
-
-  <!-- Features Widget *************** -->
-
   <Features
     id="features"
     title="Nos services"
-    subtitle="Description Description Description Description Description Description Description "
     items={[
       {
         title: 'Automatismes',
         description: "Pose et installation d'ascenceurs",
-        icon: 'tabler:brand-tailwind',
+        icon: 'tabler:focus-auto',
       },
       {
         title: 'Portail, portes de garage',
@@ -75,13 +52,13 @@ const metadata = {
         title: 'Domotique, alarmes, caméra',
         description:
           'Un ensemble de technologies et de systèmes intégrés visant à automatiser et à améliorer les fonctions domestiques.',
-        icon: 'tabler:list-check',
+        icon: 'tabler:settings-automation',
       },
       {
         title: 'Accessibilité de Personne à Mobilité Réduite',
         description:
           'Nous nous engageons à offrir des solutions de portails et portes de garage parfaitement accessibles aux Personnes à Mobilité Réduite (PMR).',
-        icon: 'tabler:rocket',
+        icon: 'tabler:home-shield',
       },
 
       {
@@ -97,10 +74,10 @@ const metadata = {
 
   <Stats
     stats={[
-      { title: 'Chantiers', amount: '+ 1K' },
-      { title: 'Clients satisfaits', amount: '+ 3K' },
-      { title: 'Partenaires', amount: '+ 100' },
-      { title: "Années d'expérience", amount: '+ 20 ans' },
+      { title: 'Chantiers', amount: '50' },
+      { title: 'Clients satisfaits', amount: '100' },
+      { title: 'Partenaires', amount: '20' },
+      { title: "Années d'expérience", amount: '20' },
     ]}
   />
 
@@ -128,12 +105,12 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Colorful Image',
+      src: '/src/assets/images/img1.jpg',
+      alt: 'Image',
     }}
   >
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+      <div class="absolute inset-0 bg-gray-50 dark:bg-transparent"></div>
     </Fragment>
   </Content>
 
@@ -159,12 +136,12 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2194&q=80',
+      src: '/src/assets/images/img2.jpg',
       alt: 'Blueprint Image',
     }}
   >
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+      <div class="absolute inset-0 bg-gray-50 dark:bg-transparent"></div>
     </Fragment>
   </Content>
 
@@ -188,8 +165,8 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1611462985358-60d3498e0364?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-      alt: 'Astronauts Image',
+      src: '/src/assets/images/img3.jpg',
+      alt: 'Image',
     }}
   >
     <Fragment slot="content">
@@ -201,7 +178,7 @@ const metadata = {
       strictes.
     </Fragment>
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+      <div class="absolute inset-0 bg-gray-50 dark:bg-transparent"></div>
     </Fragment>
   </Content>
 
@@ -232,10 +209,8 @@ const metadata = {
       },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
+      src: '/src/assets/images/img4.jpg',
       alt: 'Steps image',
     }}
   />
-
-  <FeedbackForm client:load />
 </Layout>

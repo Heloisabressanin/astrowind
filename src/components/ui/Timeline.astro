@@ -1,8 +1,10 @@
 ---
+// Importer les composants nécessaires
 import { Icon } from 'astro-icon/components';
 import { twMerge } from 'tailwind-merge';
 import type { Item } from '~/types';
 
+// Définir les props du composant
 export interface Props {
   items?: Array<Item>;
   defaultIcon?: string;
@@ -20,10 +22,25 @@ const {
 } = classes;
 ---
 
-{
-  items && items.length && (
-    <div class={containerClass}>
-      {items.map(({ title, description, icon, classes: itemClasses = {} }, index = 0) => (
+<style>
+  .step {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.5s,
+      transform 0.5s;
+  }
+  .step.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<div class={containerClass} id="steps-section">
+  {
+    items &&
+      items.length &&
+      items.map(({ title, description, icon, classes: itemClasses = {} }, index = 0) => (
         <div class={twMerge('flex', panelClass, itemClasses?.panel)}>
           <div class="flex flex-col items-center mr-4 rtl:mr-0 rtl:ml-4">
             <div>
@@ -38,7 +55,7 @@ const {
             </div>
             {index !== items.length - 1 && <div class="w-px h-full bg-black/10 dark:bg-slate-400/50" />}
           </div>
-          <div class={`pt-1 ${index !== items.length - 1 ? 'pb-8' : ''}`}>
+          <div class={`pt-1 ${index !== items.length - 1 ? 'pb-8' : ''} step`}>
             {title && <p class={twMerge('text-xl font-bold', titleClass, itemClasses?.title)} set:html={title} />}
             {description && (
               <p
@@ -48,7 +65,29 @@ const {
             )}
           </div>
         </div>
-      ))}
-    </div>
-  )
-}
+      ))
+  }
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const steps = entry.target.querySelectorAll('.step');
+          steps.forEach((step, index) => {
+            setTimeout(() => {
+              step.classList.add('visible');
+            }, index * 1500); // Décalage de 2 secondes entre chaque étape
+          });
+          observer.unobserve(entry.target); // Arrête de surveiller l'élément une fois qu'il est visible
+        }
+      });
+    });
+
+    const stepsSection = document.getElementById('steps-section');
+    if (stepsSection) {
+      observer.observe(stepsSection);
+    }
+  });
+</script>

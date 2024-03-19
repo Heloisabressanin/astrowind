@@ -11,11 +11,8 @@ import Metadata from '~/components/common/Metadata.astro';
 import SiteVerification from '~/components/common/SiteVerification.astro';
 import Analytics from '~/components/common/Analytics.astro';
 import BasicScripts from '~/components/common/BasicScripts.astro';
-
-// Uncomment line below to activate View Transitions
-// import { ViewTransitions } from 'astro:transitions';
-
 import type { MetaData as MetaDataType } from '~/types';
+import { ViewTransitions } from 'astro:transitions';
 
 export interface Props {
   metadata?: MetaDataType;

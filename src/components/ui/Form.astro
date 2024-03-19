@@ -2,16 +2,16 @@
 import type { Form } from '~/types';
 import Button from '~/components/ui/Button.astro';
 
-const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props as Form;
+const { inputs, textarea, button = 'VALIDER' } = Astro.props as Form;
 ---
 
-<form>
+<form id="contactForm">
   {
     inputs &&
       inputs.map(
         ({ type = 'text', name, label = '', autocomplete = 'on', placeholder = '' }) =>
           name && (
-            <div class="mb-6">
+            <div class="mb-3">
               {label && (
                 <label for={name} class="block text-sm font-medium">
                   {label}
@@ -38,7 +38,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
         </label>
         <textarea
           id="textarea"
-          name="textarea"
+          name="message"
           rows={textarea.rows ? textarea.rows : 4}
           placeholder={textarea.placeholder}
           class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
@@ -46,40 +46,70 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
       </div>
     )
   }
-
-  {
-    disclaimer && (
-      <div class="mt-3 flex items-start">
-        <div class="flex mt-0.5">
-          <input
-            id="disclaimer"
-            name="disclaimer"
-            type="checkbox"
-            class="cursor-pointer mt-1 py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
-          />
-        </div>
-        <div class="ml-3">
-          <label for="disclaimer" class="cursor-pointer select-none text-sm text-gray-600 dark:text-gray-400">
-            {disclaimer.label}
-          </label>
-        </div>
-      </div>
-    )
-  }
-
   {
     button && (
       <div class="mt-10 grid">
-        <Button variant="primary" type="submit">{button}</Button>
+        <Button variant="primary" type="submit">
+          {button}
+        </Button>
       </div>
     )
   }
-
-  {
-    description && (
-      <div class="mt-3 text-center">
-        <p class="text-sm text-gray-600 dark:text-gray-400">{description}</p>
-      </div>
-    )
-  }
+  <div id="toast" class="toast">Message envoyé avec succès !</div>
+  <div id="toast-error" class="toast-error">Erreur lors de la soumission du formulaire !</div>
 </form>
+
+<script>
+  import { contactSchema } from 'src/utils/zod/contactSchema';
+
+  document?.getElementById('contactForm')?.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    // Récupérer les valeurs des champs du formulaire
+    const formData = new FormData(event.target as HTMLFormElement);
+
+    const formDataObject = {};
+    formData.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+
+    try {
+      // Valider les données du formulaire avec Zod
+      contactSchema.parse(formDataObject);
+
+      const response = await fetch('/api/sendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataObject),
+      });
+
+      if (response.ok) {
+        console.log('Formulaire soumis avec succès !');
+        const toast = document.getElementById('toast');
+        toast?.classList.add('show');
+        setTimeout(() => {
+          toast?.classList.remove('show');
+          location.reload(); // Recharger la page
+        }, 3000);
+      } else {
+        console.error('Erreur lors de la soumission du formulaire :', response.statusText);
+        const toastError = document.getElementById('toast-error');
+        toastError?.classList.add('show');
+        setTimeout(() => {
+          toastError?.classList.remove('show');
+          location.reload(); // Recharger la page
+        }, 3000);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la requête :', error.message);
+      const toastError = document.getElementById('toast-error');
+      toastError?.classList.add('show');
+      setTimeout(() => {
+        toastError?.classList.remove('show');
+        location.reload(); // Recharger la page
+      }, 3000);
+    }
+  });
+</script>
